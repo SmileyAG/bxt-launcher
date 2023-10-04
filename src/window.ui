@@ -76,11 +76,9 @@
               <object class="GtkComboBoxText" id="mod_combo_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="active_id">valve</property>
+                <property name="active_id">svencoop</property>
                 <items>
-                  <item id="valve">Half-Life</item>
-                  <item id="gearbox" translatable="yes">Opposing Force</item>
-                  <item id="bshift" translatable="yes">Blue Shift</item>
+                  <item id="svencoop">Sven Coop</item>
                 </items>
               </object>
               <packing>

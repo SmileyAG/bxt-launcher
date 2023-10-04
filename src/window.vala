@@ -97,10 +97,8 @@ namespace BxtLauncher {
 
             mod_combo_box.remove_all ();
             if (mod_folders.size () == 0) {
-                mod_combo_box.append ("valve", "Half-Life");
-                mod_combo_box.append ("gearbox", "Opposing Force");
-                mod_combo_box.append ("bshift", "Blue Shift");
-                mod_combo_box.set_active_id ("valve");
+                mod_combo_box.append ("svencoop", "Sven Coop");
+                mod_combo_box.set_active_id ("svencoop");
             } else {
                 string? first = null;
                 mod_folders.foreach((id, name) => {
@@ -108,7 +106,7 @@ namespace BxtLauncher {
                         first = id;
                     }
 
-                    if (id == "valve") {
+                    if (id == "svencoop") {
                         mod_combo_box.prepend (id, name);
                         first = id;
                     } else {
@@ -210,7 +208,7 @@ namespace BxtLauncher {
             var monitor = SystemMonitor.get_default ();
 
             // Check if Half-Life is already running.
-            var hl = monitor.find_process ("hl_linux");
+            var hl = monitor.find_process ("svencoop_linux");
             if (hl != null) {
                 var dialog = new Gtk.MessageDialog (
                     this,
@@ -233,7 +231,7 @@ namespace BxtLauncher {
             monitor.on_process_added.connect (process_added_cb);
 
             try {
-                string[] spawn_args = {"steam", "steam://rungameid/70"};
+                string[] spawn_args = {"steam", "steam://rungameid/225840"};
 
                 GLib.Process.spawn_async (
                     null,
@@ -265,7 +263,7 @@ namespace BxtLauncher {
         }
 
         private void process_added_cb (SystemMonitor monitor, Process process) {
-            if (process.cmdline == "hl_linux") {
+            if (process.cmdline == "svencoop_linux") {
                 monitor.on_process_added.disconnect (process_added_cb);
 
                 extract_environment_and_launch_hl (process);
@@ -273,7 +271,7 @@ namespace BxtLauncher {
         }
 
         private void extract_environment_and_launch_hl (Process process)
-            requires (process.cmdline == "hl_linux")
+            requires (process.cmdline == "svencoop_linux")
         {
             string hl_pwd = "";
 
@@ -315,7 +313,7 @@ namespace BxtLauncher {
         }
 
         private void process_removed_cb (SystemMonitor monitor, Process process) {
-            if (process.cmdline == "hl_linux") {
+            if (process.cmdline == "svencoop_linux") {
                 monitor.on_process_removed.disconnect (process_removed_cb);
 
                 close_dialog ();
@@ -344,7 +342,7 @@ namespace BxtLauncher {
                 return;
             }
 
-            string[] spawn_args = {"./hl_linux", "-steam", "-game", mod_combo_box.get_active_id ()};
+            string[] spawn_args = {"./svencoop_linux", "-steam", "-game", mod_combo_box.get_active_id ()};
             string[] spawn_env = Environ.get ();
 
             var hl_ld_library_path = settings.get_string ("hl-ld-library-path");
